@@ -31,7 +31,8 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   #config.vm.network "forwarded_port", guest: 8888, host: 8080 
   config.vm.network "forwarded_port", guest: 9090, host: 8888
-  config.vm.network "forwarded_port", guest: 3000, host: 3000
+  # change host port to 3001 as MacOS has an already running service at 3000
+  config.vm.network "forwarded_port", guest: 3000, host: 3001
   config.vm.network "forwarded_port", guest: 3030, host: 3030
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "forwarded_port", guest: 16686, host: 8088
