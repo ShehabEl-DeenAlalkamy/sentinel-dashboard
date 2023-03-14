@@ -1,0 +1,11 @@
+# ignore .DS_Store
+.DS_Store
+
+# ignore vscode temp generated files
+.vscode/*
+
+# ignore python virtual environments
+.venv
+
+# ignore vagrant hidden directory
+.vagrant
