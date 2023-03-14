@@ -9,3 +9,8 @@
 
 # ignore vagrant hidden directory
 .vagrant
+
+# byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
