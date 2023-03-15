@@ -40,6 +40,13 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 8888, host: 8888
   config.vm.network "forwarded_port", guest: 8000, host: 8000
 
+  # Expose k3s kube api server
+  config.vm.network "forwarded_port", guest: 6443, host: 6443
+  # Expose NodePorts for host machine access
+  for p in 30000..30010
+    config.vm.network "forwarded_port", guest: p, host: p, protocol: "tcp"
+  end
+
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
   # via 127.0.0.1 to disable public access
@@ -82,11 +89,25 @@ Vagrant.configure("2") do |config|
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
+     sudo zypper refresh
      sudo zypper --non-interactive install apparmor-parser
   SHELL
 
   args = []
-      config.vm.provision "k3s shell script", type: "shell",
-          path: "./scripts/k3s.sh",
-          args: args
+  config.vm.provision "k3s shell script", type: "shell",
+      path: "scripts/k3s.sh",
+      args: args
+
+  config.vm.provision "prometheus booststrap", type: "shell",
+      path: "scripts/bootstrap_prometheus.sh",
+      args: args
+  
+  config.vm.provision "jaeger booststrap", type: "shell",
+      path: "scripts/bootstrap_jaeger.sh",
+      args: args
+
+  config.trigger.after [:up, :provision] do |trigger|
+    trigger.info = "[INFO] kubectl access instantiation.."
+    trigger.run = {path: "scripts/copy_kubeconfig.sh"}
+  end
 end
