@@ -3,8 +3,8 @@
 # exit on errors
 set -e
 
+echo "[INFO] installing k3s v1.25.7+k3s1"
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.25.7+k3s1 sh -
-echo "[INFO] installing k3s v1.19.5+k3s1"
 # ! I am facing errors with this version on installing NGINX ingress controller
 # ! MountVolume.SetUp failed for volume "webhook-cert" : secret "ingress-nginx-admission" not found
 # curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.19.5+k3s1 sh -
