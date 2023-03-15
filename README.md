@@ -3,7 +3,7 @@
   "MD041": false
 } -->
 
-# <img src="docs/assets/imgs/sentinel-logo.png" alt="Sentinel Icon" title="Sentinel Logo" height="24" align/> Sentinel Dashboard
+# <img src="docs/assets/imgs/sentinel-logo.png" alt="Sentinel Icon" title="Sentinel Logo" height="25" align/> Sentinel Dashboard
 
 <div align="center">
 
