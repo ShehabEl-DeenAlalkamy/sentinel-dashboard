@@ -270,6 +270,18 @@ The setup has provided a `Jaeger-all-in-one / Overview` dashboard to give us ins
 
 </div>
 
+Congratulations! you have provisioned the infrastructure succesfully. Feel free to play around. Now you are ready to install the Python application, but first you need to remove the `hotrod` application alongside `jaeger-all-in-one` instance or rmeove `hotrod` only as the Python application will use the `jaeger` instance in the `default` namespace.
+
+To remove `hotrod` application run the following:
+
+```bash
+$ kubectl delete svc hotrod hotrod-external; kubectl delete deployments hotrod
+
+service "hotrod" deleted
+service "hotrod-external" deleted
+deployment.apps "hotrod" deleted
+```
+
 ## ⚔️ Developed By
 
 <a href="https://www.linkedin.com/in/shehab-el-deen/" target="_blank"><img alt="LinkedIn" align="right" title="LinkedIn" height="24" width="24" src="docs/assets/imgs/linkedin.png"></a>
