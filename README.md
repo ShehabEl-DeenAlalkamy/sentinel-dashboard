@@ -3,7 +3,7 @@
   "MD041": false
 } -->
 
-# <img src="docs/assets/imgs/sentinel-logo.png" alt="Sentinel Icon" title="Sentinel Logo" height="25" align/> Sentinel Dashboard
+# <img src="docs/assets/imgs/sentinel-logo.png" alt="Sentinel Icon" title="Sentinel Logo" height="25"/> Sentinel Dashboard
 
 <div align="center">
 
@@ -20,7 +20,13 @@ Welcome to `sentinel-dashboard`!
 
 `sentinel-dashboard` is a simple metrics dashboard used to apply _Observability_ course content from **Udacity Cloud Native Applications Architecture Nano Degree program**.
 
-You are given a simple Python application written with [Flask][flask] and you need to apply basic [SLOs and SLIs][slo-and-slis] to achieve observability.
+You are given a simple Python application written with [Flask][flask] and you need to apply basic [SLOs and SLIs][slo-and-slis] to achieve observability by creating dashboards that use multiple graphs to monitor our sample application that is deployed on a Kubernetes cluster.
+
+<div align="center">
+
+<img src="docs/assets/imgs/project-overview.png" alt="Sentinel Icon" title="Sentinel Logo" height="285"/>
+
+</div>
 
 ### What is Observability?
 
