@@ -86,6 +86,9 @@ Additionally, the setup will `out-of-the-box` configure the following for you:
   - `Prometheus Server` on your local machine at `http://localhost:30001`.
   - `Jaeger UI` on your local machine at `http://localhost:30002`.
   - `hotrod app UI` on your local machine at `http://localhost:30003`.
+
+> :memo: **Note:** the installation will expose ports `30000 to 30010` where you can easily expose any service you want using `NodePort` service and access it locally, you can conifgure the range you want from you [Vagrantfile][vagrantfile-nodeport-range].
+
 - Automatically configure `jaeger-all-in-one` instance located in `default` namespace as a datasource in `Grafana Server`.
 - Automatic scraping of:
   - `jaeger-operator` metrics located in `observability` namespace.
@@ -296,6 +299,7 @@ Shehab El-Deen Alalkamy
 [openssh-install]: https://www.cyberciti.biz/faq/ubuntu-linux-install-openssh-server/
 [sshpass-install]: https://www.cyberciti.biz/faq/noninteractive-shell-script-ssh-password-provider/
 [hotrod-app]: https://github.com/jaegertracing/jaeger/blob/main/examples/hotrod/README.md
+[vagrantfile-nodeport-range]: ./Vagrantfile#L46
 [vagrant-cheatsheet]: https://gist.github.com/wpscholar/a49594e2e2b918f4d0c4
 [opensuse]: https://www.opensuse.org/
 [vagrantfile]: ./Vagrantfile#L109
