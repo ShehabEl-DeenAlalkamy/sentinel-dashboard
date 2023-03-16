@@ -1,3 +1,8 @@
+<!-- markdownlint-configure-file {
+  "MD033": false,
+  "MD041": false
+} -->
+
 # Submission TODO List
 
 **Note:** For the screenshots, you can store all of your answer images in the `answer-img` directory.
