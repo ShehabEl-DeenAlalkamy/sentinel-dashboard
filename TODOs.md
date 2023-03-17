@@ -53,6 +53,8 @@ _TODO:_ Create a dashboard in Grafana that shows Prometheus as a source. Take a 
 
 ![My Custom Dashboard][my-basic-dashboard]
 
+![My Custom Dashboard - Instance Load per CPU][my-basic-dashboard-datasource]
+
 </div>
 
 ## Describe SLO/SLI
@@ -117,3 +119,4 @@ _TODO_: Create a Dashboard containing graphs that capture all the metrics of you
 [installation-grafana-datasources]: ./docs/assets/imgs/installation-grafana-datasources.png
 [installation-grafana-jaeger-datasource]: ./docs/assets/imgs/installation-grafana-jaeger-datasource.png
 [my-basic-dashboard]: ./docs/assets/imgs/my-basic-custom-dashboard.png
+[my-basic-dashboard-datasource]: ./docs/assets/imgs/my-basic-custom-dashboard-datasource.png
