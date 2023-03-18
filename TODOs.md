@@ -79,6 +79,34 @@ _TODO:_ Create a dashboard in Grafana that shows Prometheus as a source. Take a 
 
 _TODO:_ Describe, in your own words, what the SLIs are, based on an SLO of _monthly uptime_ and _request response time_.
 
+<details>
+
+<summary>Answer</summary>
+
+&nbsp;&nbsp;&nbsp;&nbsp;**SLI** is a service level indicator—a carefully defined quantitative measure of some aspect of the level of service that is provided.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**SLO** is a service level objective: a target value or range of values for a service level that is measured by an **SLI**. A natural structure for SLOs is thus `SLI ≤ target`, or `lower bound ≤ SLI ≤ upper bound`.
+
+<table>
+    <tr align="center" style="font-size: 20px;">
+        <td><strong>Improvement Goal</strong></td>
+        <td><strong>SLO Example</strong></td>
+        <td><strong>SLIs</strong></td>
+    </tr>
+    <tr>
+        <td align="center" style="font-size: 18px;"><strong>Uptime</strong></td>
+        <td>99.99% of all HTTP statuses will be 20x per month</td>
+        <td><ul><li><strong>Downtime duration:</strong> the time for which the system is down</li><li><strong>Downtime frequency:</strong> how often the system is down</li><li><strong>Uptime:</strong> the fraction of the time that a service is usable<li><strong>Error rate:</strong> the quantity of errors that occur within a given timeframe</li></ul></td>
+    </tr>
+    <tr>
+        <td align="center" style="font-size: 18px;"><strong>Request/Respone Time</strong></td>
+        <td>99.95% of all requests will take less than 150ms per month</td>
+        <td><ul><li><strong>Latency:</strong> how long it takes for the system to process a request</li><li><strong>Saturation:</strong> the network and server resources loads</li><li><strong>Network capacity</strong></li></ul></td>
+    </tr>
+</table>
+
+</details>
+
 ## Creating SLI metrics
 
 _TODO:_ It is important to know why we want to measure certain metrics for our customer. Describe in detail 5 metrics to measure these SLIs.
