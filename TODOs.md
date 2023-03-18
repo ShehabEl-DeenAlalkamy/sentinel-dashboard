@@ -13,6 +13,10 @@
 
 _TODO:_ run `kubectl` command to show the running pods and services for all components. Take a screenshot of the output and include it here to verify the installation
 
+<details>
+
+<summary>Answer</summary>
+
 <div align="center">
 
 ![Local kubectl, check workloads][installation-local-kubectl-check-workloads-01]
@@ -21,9 +25,15 @@ _TODO:_ run `kubectl` command to show the running pods and services for all comp
 
 </div>
 
+</details>
+
 ## Setup the Jaeger and Prometheus source
 
 _TODO:_ Expose Grafana to the internet and then setup Prometheus as a data source. Provide a screenshot of the home page after logging into Grafana.
+
+<details>
+
+<summary>Answer</summary>
 
 <div align="center">
 
@@ -45,9 +55,15 @@ _Jaeger datasource has been automatically configured as a datasource as part of 
 
 </div>
 
+</details>
+
 ## Create a Basic Dashboard
 
 _TODO:_ Create a dashboard in Grafana that shows Prometheus as a source. Take a screenshot and include it here.
+
+<details>
+
+<summary>Answer</summary>
 
 <div align="center">
 
@@ -56,6 +72,8 @@ _TODO:_ Create a dashboard in Grafana that shows Prometheus as a source. Take a 
 ![My Custom Dashboard - Instance Load per CPU][my-basic-dashboard-datasource]
 
 </div>
+
+</details>
 
 ## Describe SLO/SLI
 
