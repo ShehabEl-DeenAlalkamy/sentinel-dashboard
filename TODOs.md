@@ -88,7 +88,7 @@ _TODO:_ Describe, in your own words, what the SLIs are, based on an SLO of _mont
 &nbsp;&nbsp;&nbsp;&nbsp;**SLO** is a service level objective: a target value or range of values for a service level that is measured by an **SLI**. A natural structure for SLOs is thus `SLI ≤ target`, or `lower bound ≤ SLI ≤ upper bound`.
 
 <table>
-    <tr align="center" style="font-size: 20px;">
+    <tr align="center" style="font-size: 18px;">
         <td><strong>Improvement Goal</strong></td>
         <td><strong>SLO Example</strong></td>
         <td><strong>SLIs</strong></td>
