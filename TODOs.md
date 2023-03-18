@@ -11,7 +11,7 @@
 
 ## Verify the monitoring installation
 
-_TODO:_ run `kubectl` command to show the running pods and services for all components. Take a screenshot of the output and include it here to verify the installation
+run `kubectl` command to show the running pods and services for all components. Take a screenshot of the output and include it here to verify the installation
 
 <details>
 
@@ -29,7 +29,7 @@ _TODO:_ run `kubectl` command to show the running pods and services for all comp
 
 ## Setup the Jaeger and Prometheus source
 
-_TODO:_ Expose Grafana to the internet and then setup Prometheus as a data source. Provide a screenshot of the home page after logging into Grafana.
+Expose Grafana to the internet and then setup Prometheus as a data source. Provide a screenshot of the home page after logging into Grafana.
 
 <details>
 
@@ -59,7 +59,7 @@ _Jaeger datasource has been automatically configured as a datasource as part of 
 
 ## Create a Basic Dashboard
 
-_TODO:_ Create a dashboard in Grafana that shows Prometheus as a source. Take a screenshot and include it here.
+Create a dashboard in Grafana that shows Prometheus as a source. Take a screenshot and include it here.
 
 <details>
 
@@ -77,7 +77,7 @@ _TODO:_ Create a dashboard in Grafana that shows Prometheus as a source. Take a 
 
 ## Describe SLO/SLI
 
-_TODO:_ Describe, in your own words, what the SLIs are, based on an SLO of _monthly uptime_ and _request response time_.
+Describe, in your own words, what the SLIs are, based on an SLO of _monthly uptime_ and _request response time_.
 
 <details>
 
@@ -98,7 +98,7 @@ _TODO:_ Describe, in your own words, what the SLIs are, based on an SLO of _mont
 
 ## Creating SLI metrics
 
-_TODO:_ It is important to know why we want to measure certain metrics for our customer. Describe in detail 5 metrics to measure these SLIs.
+It is important to know why we want to measure certain metrics for our customer. Describe in detail 5 metrics to measure these SLIs.
 
 <details>
 
