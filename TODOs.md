@@ -106,7 +106,7 @@ It is important to know why we want to measure certain metrics for our customer.
 
 <table>
     <tr align="center" style="font-size: 18px;">
-        <td><strong>Improvement Goal</strong></td>
+        <td><strong>Improvement Aspect</strong></td>
         <td><strong>SLO</strong></td>
         <td><strong>SLI Metrics</strong></td>
     </tr>
