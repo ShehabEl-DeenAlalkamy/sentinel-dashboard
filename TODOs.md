@@ -83,15 +83,32 @@ _TODO:_ Describe, in your own words, what the SLIs are, based on an SLO of _mont
 
 <summary>Answer</summary>
 
-&nbsp;&nbsp;&nbsp;&nbsp;**SLI** is a service level indicator—a carefully defined quantitative measure of some aspect of the level of service that is provided.
+### Overview
+
+&nbsp;&nbsp;&nbsp;&nbsp;**SLI** is a service level indicator—a carefully defined quantitative measure of some aspect of the level of service that is provided. It is often expressed in terms of ratio of a measurement to a given amount of time.
 
 &nbsp;&nbsp;&nbsp;&nbsp;**SLO** is a service level objective: a target value or range of values for a service level that is measured by an **SLI**. A natural structure for SLOs is thus `SLI ≤ target`, or `lower bound ≤ SLI ≤ upper bound`.
+
+### Examples
+
+1. `monthly uptime` indicates that how much available your service is _in other words, working properly upon request_ during a month. A typical SLO would go like; `99.999% of reponses will be with status codes of 2xx per month`, SLI would be the actual measurement of responses status codes during a given month then compared with the SLO to indicate the current performance and induce insights and decisions on what to do next to improve the performance.
+2. `request response time` indicates the time taken to return with a response for a given request. A typical SLO would go like; `99.95% of incoming requests will be processed under 150ms per month`. SLI would be the actual measurement of difference between response/request timestamps during a given month then compared with the SLO to indicate the current performance and induce insights and decisions on what to do next to improve the performance.
+
+</details>
+
+## Creating SLI metrics
+
+_TODO:_ It is important to know why we want to measure certain metrics for our customer. Describe in detail 5 metrics to measure these SLIs.
+
+<details>
+
+<summary>Answer</summary>
 
 <table>
     <tr align="center" style="font-size: 18px;">
         <td><strong>Improvement Goal</strong></td>
-        <td><strong>SLO Example</strong></td>
-        <td><strong>SLIs</strong></td>
+        <td><strong>SLO</strong></td>
+        <td><strong>SLI Metrics</strong></td>
     </tr>
     <tr>
         <td align="center" style="font-size: 18px;"><strong>Uptime</strong></td>
@@ -99,17 +116,13 @@ _TODO:_ Describe, in your own words, what the SLIs are, based on an SLO of _mont
         <td><ul><li><strong>Downtime duration:</strong> the time for which the system is down</li><li><strong>Downtime frequency:</strong> how often the system is down</li><li><strong>Uptime:</strong> the fraction of the time that a service is usable<li><strong>Error rate:</strong> the quantity of errors that occur within a given timeframe</li></ul></td>
     </tr>
     <tr>
-        <td align="center" style="font-size: 18px;"><strong>Request/Respone Time</strong></td>
+        <td align="center" style="font-size: 18px;"><strong>Request/Response Time</strong></td>
         <td>99.95% of all requests will take less than 150ms per month</td>
         <td><ul><li><strong>Latency:</strong> how long it takes for the system to process a request</li><li><strong>Saturation:</strong> the network and server resources loads</li><li><strong>Network capacity</strong></li></ul></td>
     </tr>
 </table>
 
 </details>
-
-## Creating SLI metrics
-
-_TODO:_ It is important to know why we want to measure certain metrics for our customer. Describe in detail 5 metrics to measure these SLIs.
 
 ## Create a Dashboard to measure our SLIs
 
