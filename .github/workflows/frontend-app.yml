@@ -55,9 +55,6 @@ jobs:
             type=ref,event=pr
             type=sha
             type=raw,value=${{ github.event.inputs.raw-image-tag }}
-            type=raw,value=v1.1.0
-            type=raw,value=v1.1
-            type=raw,value=v1
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
