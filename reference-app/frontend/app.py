@@ -1,5 +1,16 @@
 from flask import Flask, render_template, request
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
+import os
+
+
+def get_namespace():
+    NAMESPACE_FILE = "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
+    namespace = os.uname()[1]
+    if os.path.exists(NAMESPACE_FILE):
+        with open(NAMESPACE_FILE, 'r') as file:
+            namespace = file.read()
+    return namespace
+
 
 app = Flask(__name__)
 metrics = GunicornInternalPrometheusMetrics(
