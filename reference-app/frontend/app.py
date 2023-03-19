@@ -1,18 +1,28 @@
 from flask import Flask, render_template, request
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 import os
+import logging
 
 
 def get_namespace():
     NAMESPACE_FILE = "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
     namespace = os.uname()[1]
     if os.path.exists(NAMESPACE_FILE):
+        app.logger.info(f"Found {NAMESPACE_FILE}")
         with open(NAMESPACE_FILE, 'r') as file:
             namespace = file.read()
+    app.logger.info(f"Set namespace label to {namespace}")
     return namespace
 
 
 app = Flask(__name__)
+
+if __name__ != '__main__':
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
+
+
 metrics = GunicornInternalPrometheusMetrics(app, defaults_prefix='frontend_service', default_labels={
                                             'instance': os.getenv('HOSTNAME', os.uname()[1]), 'namespace': get_namespace()})
 
