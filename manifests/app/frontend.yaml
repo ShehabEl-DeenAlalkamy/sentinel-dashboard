@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: frontend
-          # We advise you to build, push and use your own image, instead of using instructor's image.
           image: shehabeldeen/frontend-app:v1.0.0
+          imagePullPolicy: Always
           ports:
             - name: frontend
               containerPort: 8080
@@ -24,8 +24,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
-  annotations:
-    prometheus.io/scrape: 'true'
+  labels:
+    app: frontend
 spec:
   selector:
     app: frontend
@@ -34,3 +34,22 @@ spec:
       port: 8080
       targetPort: frontend
   type: LoadBalancer
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+    release: prometheus
+spec:
+  namespaceSelector:
+    matchNames:
+      - default
+  selector:
+    matchLabels:
+      app: frontend
+  endpoints:
+    - port: http
+      interval: 5s
+      path: /metrics
