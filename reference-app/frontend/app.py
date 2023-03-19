@@ -13,8 +13,8 @@ def get_namespace():
 
 
 app = Flask(__name__)
-metrics = GunicornInternalPrometheusMetrics(
-    app, defaults_prefix='frontend_service')
+metrics = GunicornInternalPrometheusMetrics(app, defaults_prefix='frontend_service', default_labels={
+                                            'instance': os.getenv('HOSTNAME', os.uname()[1]), 'namespace': get_namespace()})
 
 metrics.info('app_info', 'Frontend Service',
              version='1.0.0', major='1', minor='0')
