@@ -4,9 +4,11 @@ FROM python:3.7-slim
 
 # Copy local code to the container image.
 ENV APP_HOME /app
-ENV PROMETHEUS_MULTIPROC_DIR ${APP_HOME}
 WORKDIR $APP_HOME
 COPY . ./
+
+ENV PROMETHEUS_MULTIPROC_DIR /app
+ENV prometheus_multiproc_dir /app
 
 # Install production dependencies.
 RUN apt-get update && \
