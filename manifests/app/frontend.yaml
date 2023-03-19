@@ -17,7 +17,8 @@ spec:
           # We advise you to build, push and use your own image, instead of using instructor's image.
           image: ghcr.io/jasonsmithio/myfrontend:v1
           ports:
-            - containerPort: 8080
+            - name: frontend
+              containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -27,6 +28,7 @@ spec:
   selector:
     app: frontend
   ports:
-    - port: 8080
-      targetPort: 8080
+    - name: http
+      port: 8080
+      targetPort: frontend
   type: LoadBalancer
