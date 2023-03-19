@@ -17,6 +17,7 @@ on:
     inputs:
       raw-image-tag:
         description: "Image Tag"
+        type: string
         required: true
         default: "latest"
 
