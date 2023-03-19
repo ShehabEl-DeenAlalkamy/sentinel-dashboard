@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: shehabeldeen/frontend-app:v1.0.0
+          image: shehabeldeen/frontend-app:v1.1.0
           imagePullPolicy: Always
           ports:
             - name: frontend
