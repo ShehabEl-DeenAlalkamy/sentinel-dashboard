@@ -14,5 +14,13 @@ def homepage():
     return render_template("main.html")
 
 
+metrics.register_default(
+    metrics.counter(
+        'frontend_service_http_request_by_path', 'Request count by request paths',
+        labels={'path': lambda: request.path, 'method': lambda: request.method,
+                'status': lambda resp: resp.status_code}
+    )
+)
+
 if __name__ == "__main__":
     app.run()
