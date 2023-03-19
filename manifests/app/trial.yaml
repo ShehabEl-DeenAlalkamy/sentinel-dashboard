@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: trial-app
+  name: trial
 spec:
   replicas: 3
   selector:
@@ -13,16 +13,16 @@ spec:
         app: trial
     spec:
       containers:
-      - name: trial
-        # We advise you to build, push and use your own image, instead of using instructor's image.
-        image: ghcr.io/jasonsmithio/trial:v1
-        ports:
-        - containerPort: 8080
+        - name: trial
+          # We advise you to build, push and use your own image, instead of using instructor's image.
+          image: ghcr.io/jasonsmithio/trial:v1
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: trial-service
+  name: trial
 spec:
   selector:
     app: trial
