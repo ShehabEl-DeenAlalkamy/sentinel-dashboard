@@ -1,6 +1,5 @@
 from app import _logger
 
-from flask import current_app as app
 from flask import Blueprint, render_template
 
 index_bp = Blueprint('index_bp', __name__)

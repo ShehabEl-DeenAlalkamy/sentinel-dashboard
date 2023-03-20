@@ -1,7 +1,6 @@
 from app import _logger
 
-from flask import current_app as app
-from flask import Blueprint, render_template
+from flask import Blueprint
 
 healthchecks_bp = Blueprint('healthchecks_bp', __name__)
 
