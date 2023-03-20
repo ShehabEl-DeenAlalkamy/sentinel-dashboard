@@ -7,20 +7,20 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: frontend
-      app.kubernetes.io/version: "1.1.2"
+      app.kubernetes.io/version: "2.0.0"
       app.kubernetes.io/component: frontend
       app.kubernetes.io/part-of: sentinel-dashboard
   template:
     metadata:
       labels:
         app.kubernetes.io/name: frontend
-        app.kubernetes.io/version: "1.1.2"
+        app.kubernetes.io/version: "2.0.0"
         app.kubernetes.io/component: frontend
         app.kubernetes.io/part-of: sentinel-dashboard
     spec:
       containers:
         - name: frontend
-          image: shehabeldeen/frontend-app:v1
+          image: shehabeldeen/frontend-app:v2
           imagePullPolicy: Always
           ports:
             - name: frontend
@@ -32,13 +32,13 @@ metadata:
   name: frontend
   labels:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "1.1.2"
+    app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
 spec:
   selector:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "1.1.2"
+    app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   ports:
@@ -54,7 +54,7 @@ metadata:
   namespace: monitoring
   labels:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "1.1.2"
+    app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
     release: prometheus
