@@ -61,6 +61,7 @@ metadata:
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
+    svc.kubernetes.io/name: frontend
     app.kubernetes.io/name: frontend
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
@@ -96,6 +97,7 @@ spec:
       - default
   selector:
     matchLabels:
+      svc.kubernetes.io/name: frontend
       app.kubernetes.io/name: frontend
       app.kubernetes.io/component: frontend
       app.kubernetes.io/part-of: sentinel-dashboard
@@ -114,6 +116,7 @@ metadata:
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
+    svc.kubernetes.io/name: frontend-external
     app.kubernetes.io/name: frontend
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
