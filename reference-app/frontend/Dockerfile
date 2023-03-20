@@ -32,4 +32,4 @@ USER 3000
 
 EXPOSE $APP_PORT
 
-CMD [ "sh", "-c", "gunicorn", "--access-logfile", "-", "--error-logfile", "-", "-c", "${CONFIG_PATH}", "-w", "${WORKERS_NO}" "-b", "${APP_IP_ADDRESS}:${APP_PORT}", "wsgi:app" ]
+CMD [ "gunicorn", "--access-logfile", "-", "--error-logfile", "-", "-c", "${CONFIG_PATH}", "-w", "${WORKERS_NO}" "-b", "${APP_IP_ADDRESS}:${APP_PORT}", "wsgi:app" ]
