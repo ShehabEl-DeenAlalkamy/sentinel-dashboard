@@ -10,7 +10,7 @@ def _init(app):
     metrics.init_app(app)
 
     metrics.info('app_info', 'Frontend Service',
-                 version='2.0.0', major='2', minor='0')
+                 version='2.1.0', major='2', minor='1')
 
     metrics.register_default(
         metrics.counter(
