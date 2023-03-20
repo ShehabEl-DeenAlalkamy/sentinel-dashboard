@@ -17,27 +17,31 @@ ENV PROMETHEUS_MULTIPROC_DIR ${APP_HOME}/metrics
 ENV prometheus_multiproc_dir ${APP_HOME}/metrics
 
 # Adding doas pacakge, an alternative to sudo package
-RUN apk add doas && \
-    # Following least privilege principle, to ensure we don't provide root access to our container default user
-    addgroup -g 3000 -S python && \
-    adduser -u 3000 -G python -S python
+# RUN apk add doas && \
+#     # Following least privilege principle, to ensure we don't provide root access to our container default user
+#     addgroup -g 3000 -S python && \
+#     adduser -u 3000 -G python -S python
 
-RUN mkdir -p ${APP_HOME} && chown python:python ${APP_HOME}
+# RUN mkdir -p ${APP_HOME} && chown python:python ${APP_HOME}
+RUN mkdir -p ${APP_HOME}
 WORKDIR ${APP_HOME}
 
 # Create multi-proc metrics data store directory
-RUN mkdir -p ${PROMETHEUS_MULTIPROC_DIR} && chown python:python ${PROMETHEUS_MULTIPROC_DIR}
+# RUN mkdir -p ${PROMETHEUS_MULTIPROC_DIR} && chown python:python ${PROMETHEUS_MULTIPROC_DIR}
+RUN mkdir -p ${PROMETHEUS_MULTIPROC_DIR}
 
 # Making use of docker layer caching by separating the dependencies from the source code
-COPY --chown=python:python requirements.txt .
+# COPY --chown=python:python requirements.txt .
+COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
 # Adding source code
-COPY --chown=python:python . .
+# COPY --chown=python:python . .
+COPY . .
 
 # su python
-USER 3000
+# USER 3000
 
 EXPOSE ${APP_PORT}
 EXPOSE ${APP_METRICS_SERVER_PORT}
