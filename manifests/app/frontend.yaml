@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -34,15 +35,21 @@ spec:
         - name: frontend
           image: shehabeldeen/frontend-app:v2
           imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /usr/app/metrics
+              name: metrics-storage
           ports:
             - name: frontend
               containerPort: 8080
           env:
             - name: BACKEND_SVC_BASE_URL
-              value: "http://localhost:30005"
+              value: "http://localhost:30006"
 
             - name: TRIAL_SVC_BASE_URL
-              value: "http://localhost:30006"
+              value: "http://localhost:30007"
+      volumes:
+        - name: metrics-storage
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
@@ -96,3 +103,28 @@ spec:
     - port: http
       interval: 5s
       path: /metrics
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-external
+  annotations:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: sentinel-dashboard
+  labels:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: sentinel-dashboard
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: sentinel-dashboard
+  ports:
+    - name: http
+      port: 8080
+      targetPort: frontend
+      nodePort: 30004
