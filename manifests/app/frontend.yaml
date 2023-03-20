@@ -2,19 +2,31 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  labels:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: sentinel-dashboard
+  annotations:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: sentinel-dashboard
 spec:
   replicas: 3
   selector:
     matchLabels:
       app.kubernetes.io/name: frontend
-      app.kubernetes.io/version: "2.0.0"
       app.kubernetes.io/component: frontend
       app.kubernetes.io/part-of: sentinel-dashboard
   template:
     metadata:
-      labels:
+      annotations:
         app.kubernetes.io/name: frontend
         app.kubernetes.io/version: "2.0.0"
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/part-of: sentinel-dashboard
+      labels:
+        app.kubernetes.io/name: frontend
         app.kubernetes.io/component: frontend
         app.kubernetes.io/part-of: sentinel-dashboard
     spec:
@@ -31,21 +43,23 @@ spec:
 
             - name: TRIAL_SVC_BASE_URL
               value: "http://localhost:30006"
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: frontend
-  labels:
+  annotations:
     app.kubernetes.io/name: frontend
     app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: sentinel-dashboard
+  labels:
+    app.kubernetes.io/name: frontend
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
 spec:
   selector:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   ports:
@@ -59,6 +73,10 @@ kind: ServiceMonitor
 metadata:
   name: frontend
   namespace: monitoring
+  annotations:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: sentinel-dashboard
   labels:
     app.kubernetes.io/name: frontend
     app.kubernetes.io/version: "2.0.0"
