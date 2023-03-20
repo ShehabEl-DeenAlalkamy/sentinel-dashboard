@@ -1,9 +1,9 @@
 from flask import Flask
-from prometheus_flask_exporter.multiprocess import GunicornPrometheusMetrics
+from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 import logging
 
 _logger = logging.getLogger('frontend_svc')
-metrics = GunicornPrometheusMetrics.for_app_factory(
+metrics = GunicornInternalPrometheusMetrics.for_app_factory(
     defaults_prefix='frontend_service', excluded_paths=['/metrics', '/health'])
 
 

@@ -1,11 +1,6 @@
-from prometheus_flask_exporter.multiprocess import GunicornPrometheusMetrics
-import os
-
-
-def when_ready(server):
-    GunicornPrometheusMetrics.start_http_server_when_ready(
-        int(os.environ['APP_METRICS_SERVER_PORT']))
+from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 
 
 def child_exit(server, worker):
-    GunicornPrometheusMetrics.mark_process_dead_on_child_exit(worker.pid)
+    GunicornInternalPrometheusMetrics.mark_process_dead_on_child_exit(
+        worker.pid)

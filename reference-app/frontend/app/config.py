@@ -10,7 +10,6 @@ class BaseConfig:
     DEBUG = False
     BACKEND_SVC_BASE_URL = os.environ["BACKEND_SVC_BASE_URL"]
     TRIAL_SVC_BASE_URL = os.environ["TRIAL_SVC_BASE_URL"]
-    METRICS_SERVER_PORT = os.environ["APP_METRICS_SERVER_PORT"]
     LOGGING_CONFIG = {
         'version': 1,
         'disable_existing_loggers': True,

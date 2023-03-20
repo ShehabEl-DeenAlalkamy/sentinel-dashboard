@@ -4,7 +4,6 @@ FROM python:3.8-alpine@sha256:9e8a162cd85c78458ac47457b08450be8ca4ae5de5ee0f7b23
 # In production I would rather to keep some of these info confidential but there is no harm for development purposes
 ENV APP_IP_ADDRESS 0.0.0.0
 ENV APP_PORT 8080
-ENV APP_METRICS_SERVER_PORT 8090
 ENV APP_HOME /usr/app
 ENV APP_TARGET_MODULE wsgi
 ENV APP_TARGET_APP app
@@ -44,6 +43,5 @@ COPY . .
 # USER 3000
 
 EXPOSE ${APP_PORT}
-EXPOSE ${APP_METRICS_SERVER_PORT}
 
 CMD gunicorn --access-logfile ${APP_ACCESS_LOG_FILE} --error-logfile ${APP_ERROR_LOG_FILE} -c ${APP_CONFIG_PATH} -w ${APP_WORKERS_NO} -b ${APP_IP_ADDRESS}:${APP_PORT} ${APP_TARGET_MODULE}:${APP_TARGET_APP}
