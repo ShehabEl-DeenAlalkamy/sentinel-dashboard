@@ -25,6 +25,13 @@ spec:
           ports:
             - name: frontend
               containerPort: 8080
+          env:
+            - name: BACKEND_SVC_BASE_URL
+              value: "http://localhost:30005"
+
+            - name: TRIAL_SVC_BASE_URL
+              value: "http://localhost:30006"
+
 ---
 apiVersion: v1
 kind: Service
