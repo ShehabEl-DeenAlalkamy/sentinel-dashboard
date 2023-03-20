@@ -15,9 +15,6 @@ RUN apk add doas && \
 RUN mkdir -p "${APP_HOME}" && chown python:python "${APP_HOME}"
 WORKDIR "${APP_HOME}"
 
-# Install dependencies
-RUN apk add --no-cache gcc musl-dev linux-headers geos libc-dev postgresql-dev
-
 # Making use of docker layer caching by separating the dependencies from the source code
 COPY --chown=python:python requirements.txt .
 RUN pip install --upgrade pip && \
