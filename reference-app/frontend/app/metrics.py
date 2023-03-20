@@ -1,9 +1,12 @@
 from app import metrics
+from app.utils.helpers import get_host
 
 from flask import request
 
 
 def _init(app):
+    metrics._default_labels = {'host': get_host()}
+
     metrics.init_app(app)
 
     metrics.info('app_info', 'Frontend Service',
