@@ -27,7 +27,7 @@ metrics.register_default(
     metrics.counter(
         'frontend_service_http_request_by_path', 'Request count by request paths',
         labels={'path': lambda: request.path, 'method': lambda: request.method,
-                'status': lambda resp: resp.status_code}
+                'status': lambda resp: resp.status_code}, initial_value_when_only_static_labels=False
     )
 )
 
