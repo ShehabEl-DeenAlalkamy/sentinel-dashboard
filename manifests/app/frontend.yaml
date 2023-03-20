@@ -6,11 +6,17 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: frontend
+      app.kubernetes.io/name: frontend
+      app.kubernetes.io/version: "1.1.2"
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/part-of: sentinel-dashboard
   template:
     metadata:
       labels:
-        app: frontend
+        app.kubernetes.io/name: frontend
+        app.kubernetes.io/version: "1.1.2"
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/part-of: sentinel-dashboard
     spec:
       containers:
         - name: frontend
@@ -25,10 +31,16 @@ kind: Service
 metadata:
   name: frontend
   labels:
-    app: frontend
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/version: "1.1.2"
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: sentinel-dashboard
 spec:
   selector:
-    app: frontend
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/version: "1.1.2"
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: sentinel-dashboard
   ports:
     - name: http
       port: 8080
@@ -39,8 +51,12 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: frontend
+  namespace: monitoring
   labels:
-    app: frontend
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/version: "1.1.2"
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: sentinel-dashboard
     release: prometheus
 spec:
   namespaceSelector:
@@ -48,7 +64,9 @@ spec:
       - default
   selector:
     matchLabels:
-      app: frontend
+      app.kubernetes.io/name: frontend
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/part-of: sentinel-dashboard
   endpoints:
     - port: http
       interval: 5s
