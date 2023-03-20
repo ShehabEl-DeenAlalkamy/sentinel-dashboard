@@ -52,7 +52,7 @@ class BaseConfig:
                 'level': 'INFO',
                 'propagate': False,
             },
-            'app.frontend': {
+            'frontend_svc': {
                 'handlers': ['stdout_handler', 'stderr_handler'],
                 'level': 'INFO',
                 'propagate': False,
