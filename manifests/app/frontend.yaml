@@ -52,10 +52,16 @@ spec:
             httpGet:
               path: /health
               port: frontend
+            initialDelaySeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
           readinessProbe:
             httpGet:
               path: /health
               port: frontend
+            initialDelaySeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
           env:
             - name: BACKEND_SVC_BASE_URL
               value: "http://localhost:30006"
