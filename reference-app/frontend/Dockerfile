@@ -1,11 +1,10 @@
 # I am referencing the image digest to ensure deterministic build
 FROM python:3.8-alpine@sha256:9e8a162cd85c78458ac47457b08450be8ca4ae5de5ee0f7b23665b6ea2569aed
 
-ARG CONFIG_PATH=config.py
-ARG WORKERS_NO=4
-ARG APP_IP_ADDRESS=0.0.0.0
-ARG APP_PORT=8080
-
+ENV CONFIG_PATH=config.py
+ENV WORKERS_NO=4
+ENV APP_IP_ADDRESS=0.0.0.0
+ENV APP_PORT=8080
 ENV APP_HOME /usr/app
 ENV PROMETHEUS_MULTIPROC_DIR $APP_HOME/metrics
 ENV prometheus_multiproc_dir $APP_HOME/metrics
