@@ -3,13 +3,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  labels:
-    app.kubernetes.io/name: frontend
-    app.kubernetes.io/component: frontend
-    app.kubernetes.io/part-of: sentinel-dashboard
   annotations:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/version: "2.1.0"
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: sentinel-dashboard
+  labels:
+    app.kubernetes.io/name: frontend
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
 spec:
@@ -23,7 +23,7 @@ spec:
     metadata:
       annotations:
         app.kubernetes.io/name: frontend
-        app.kubernetes.io/version: "2.0.0"
+        app.kubernetes.io/version: "2.1.0"
         app.kubernetes.io/component: frontend
         app.kubernetes.io/part-of: sentinel-dashboard
       labels:
@@ -78,7 +78,7 @@ metadata:
   name: frontend
   annotations:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/version: "2.1.0"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -104,11 +104,11 @@ metadata:
   namespace: monitoring
   annotations:
     app.kubernetes.io/name: frontend
+    app.kubernetes.io/version: "2.1.0"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
     release: prometheus
@@ -133,7 +133,7 @@ metadata:
   name: frontend-external
   annotations:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/version: "2.1.0"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
