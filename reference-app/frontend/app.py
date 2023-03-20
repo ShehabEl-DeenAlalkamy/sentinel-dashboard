@@ -16,7 +16,7 @@ metrics = GunicornInternalPrometheusMetrics(
     app, defaults_prefix='frontend_service', excluded_paths=['/metrics'])
 
 metrics.info('app_info', 'Frontend Service',
-             version='1.1.0', major='1', minor='1')
+             version='1.1.2', major='1', minor='1')
 
 
 @app.route("/")
