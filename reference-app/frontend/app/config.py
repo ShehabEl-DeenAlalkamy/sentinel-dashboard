@@ -2,11 +2,14 @@ from app.utils import filters
 
 from typing import List, Type
 import logging
+import os
 
 
 class BaseConfig:
     CONFIG_NAME = "base"
     DEBUG = False
+    BACKEND_SVC_BASE_URL = os.environ["BACKEND_SVC_BASE_URL"]
+    TRIAL_SVC_BASE_URL = os.environ["TRIAL_SVC_BASE_URL"]
     LOGGING_CONFIG = {
         'version': 1,
         'disable_existing_loggers': True,
