@@ -28,4 +28,4 @@ USER 3000
 
 EXPOSE $APP_PORT
 
-CMD [ "gunicorn", "--access-logfile", "-", "--error-logfile", "-", "-c", "config.py", "-w", "4", "-b", "0.0.0.0:$APP_PORT", "app:app" ]
+CMD [ "gunicorn", "--access-logfile", "-", "--error-logfile", "-", "-c", "config.py", "-w", "4", "-b", "0.0.0.0:\"$APP_PORT\"", "app:app" ]
