@@ -1,6 +1,10 @@
 # I am referencing the image digest to ensure deterministic build
 FROM python:3.8-alpine@sha256:9e8a162cd85c78458ac47457b08450be8ca4ae5de5ee0f7b23665b6ea2569aed
 
+ARG CONFIG_PATH config.py
+ARG WORKERS_NO 4
+ARG APP_IP_ADDRESS 0.0.0.0
+
 ENV APP_HOME /usr/app
 ENV APP_PORT 8080
 ENV PROMETHEUS_MULTIPROC_DIR $APP_HOME
@@ -28,4 +32,4 @@ USER 3000
 
 EXPOSE $APP_PORT
 
-CMD gunicorn --access-logfile - --error-logfile - -c config.py -w 4 -b 0.0.0.0:$APP_PORT wsgi:app
+CMD [ "sh", "-c", "gunicorn", "--access-logfile", "-", "--error-logfile", "-", "-c", "${CONFIG_PATH}", "-w", "${WORKERS_NO}" "-b", "${APP_IP_ADDRESS}:${APP_PORT}", "wsgi:app" ]
