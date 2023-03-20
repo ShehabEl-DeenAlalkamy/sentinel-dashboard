@@ -41,6 +41,21 @@ spec:
           ports:
             - name: frontend
               containerPort: 8080
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "64m"
+            limits:
+              memory: "256Mi"
+              cpu: "128m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: frontend
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: frontend
           env:
             - name: BACKEND_SVC_BASE_URL
               value: "http://localhost:30006"
