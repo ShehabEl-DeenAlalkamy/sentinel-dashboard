@@ -12,6 +12,8 @@
 [Getting Started](#getting-started) •
 [Author](#book-author)
 
+[![Frontend Client App][frontend-client-status-badge]][frontend-client-wflow]
+
 </div>
 
 ## Overview
@@ -302,6 +304,7 @@ Shehab El-Deen Alalkamy
 
 <!-- * Links * -->
 
+[frontend-client-wflow]: https://github.com/ShehabEl-DeenAlalkamy/sentinel-dashboard/actions/workflows/frontend-app.yml
 [slo-and-slis]: https://sre.google/sre-book/service-level-objectives/
 [flask]: https://flask.palletsprojects.com/en/1.1.x/
 [prometheus]: https://prometheus.io/
@@ -324,6 +327,7 @@ Shehab El-Deen Alalkamy
 
 <!-- * Images * -->
 
+[frontend-client-status-badge]: https://github.com/ShehabEl-DeenAlalkamy/sentinel-dashboard/actions/workflows/frontend-app.yml/badge.svg
 [installation-prom-graf]: ./docs/assets/imgs/installation-grafana-prometheus.png
 [installation-jaeger-hotrod]: ./docs/assets/imgs/installation-jaeger-hotrod.png
 [installation-local-kubectl]: ./docs/assets/imgs/installation-kubectl-local-access.png
