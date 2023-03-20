@@ -1,7 +1,7 @@
 import os
-from flask import Flask
 
-app = Flask(__name__)
+from app import create_app
 
+app = create_app(os.getenv("FLASK_ENV") or "test")
 if __name__ == "__main__":
     app.run(debug=True)
