@@ -2,6 +2,13 @@ from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 import logging
+import os
+
+
+def get_host():
+    host = os.getenv('HOSTNAME', os.uname()[1])
+    app.logger.info(f"Set 'host' label to '{host}'")
+    return host
 
 
 app = Flask(__name__)
