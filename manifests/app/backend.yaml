@@ -16,6 +16,7 @@ spec:
       containers:
         - name: backend
           image: shehabeldeen/backend-app:v1
+          imagePullPolicy: Always
           ports:
             - name: backend
               containerPort: 8080
