@@ -29,7 +29,7 @@ metrics = GunicornInternalPrometheusMetrics(
     app, defaults_prefix='backend_service', excluded_paths=['/metrics'], default_labels={'host': get_host()})
 
 metrics.info('app_info', 'Backend Service',
-             version='1.0.0', major='1', minor='0')
+             version='1.1.0', major='1', minor='1')
 
 
 @app.route("/")
