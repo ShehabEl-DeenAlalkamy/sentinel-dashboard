@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, jsonify
-
 import pymongo
+from flask import Flask, render_template, request, jsonify
 from flask_pymongo import PyMongo
+from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
+
 
 app = Flask(__name__)
 
@@ -11,6 +12,12 @@ app.config[
 ] = "mongodb://example-mongodb-svc.default.svc.cluster.local:27017/example-mongodb"
 
 mongo = PyMongo(app)
+
+metrics = GunicornInternalPrometheusMetrics(
+    app, defaults_prefix='backend_service', excluded_paths=['/metrics'])
+
+metrics.info('app_info', 'Backend Service',
+             version='1.0.0', major='1', minor='0')
 
 
 @app.route("/")
@@ -33,6 +40,15 @@ def add_star():
     new_star = star.find_one({"_id": star_id})
     output = {"name": new_star["name"], "distance": new_star["distance"]}
     return jsonify({"result": output})
+
+
+metrics.register_default(
+    metrics.counter(
+        'backend_service_http_request_by_path', 'Request count by request paths',
+        labels={'path': lambda: request.path, 'method': lambda: request.method,
+                'status': lambda resp: resp.status_code}, initial_value_when_only_static_labels=False
+    )
+)
 
 
 if __name__ == "__main__":
