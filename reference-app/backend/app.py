@@ -1,5 +1,4 @@
-import pymongo
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 
