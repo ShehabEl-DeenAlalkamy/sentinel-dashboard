@@ -7,9 +7,6 @@ ENV APP_HOME /app
 WORKDIR $APP_HOME
 COPY . ./
 
-ARG PROJECT_ID
-ENV PROJECT_ID ${PROJECT_ID}
-
 ENV PROMETHEUS_MULTIPROC_DIR /app
 ENV prometheus_multiproc_dir /app
 
