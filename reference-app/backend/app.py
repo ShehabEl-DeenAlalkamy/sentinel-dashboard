@@ -1,9 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
+import logging
 
 
 app = Flask(__name__)
+
+if __name__ != '__main__':
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
 
 app.config["MONGO_DBNAME"] = "example-mongodb"
 app.config[
