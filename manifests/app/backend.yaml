@@ -3,15 +3,33 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
+  annotations:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/version: "1.1.0"
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: sentinel-dashboard
+  labels:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: sentinel-dashboard
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: backend
+      app.kubernetes.io/name: backend
+      app.kubernetes.io/component: backend
+      app.kubernetes.io/part-of: sentinel-dashboard
   template:
     metadata:
+      annotations:
+        app.kubernetes.io/name: backend
+        app.kubernetes.io/version: "1.1.0"
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/part-of: sentinel-dashboard
       labels:
-        app: backend
+        app.kubernetes.io/name: backend
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/part-of: sentinel-dashboard
     spec:
       containers:
         - name: backend
@@ -25,11 +43,21 @@ apiVersion: v1
 kind: Service
 metadata:
   name: backend
+  annotations:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/version: "1.1.0"
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: sentinel-dashboard
   labels:
-    app: backend
+    svc.kubernetes.io/name: backend
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: sentinel-dashboard
 spec:
   selector:
-    app: backend
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: sentinel-dashboard
   ports:
     - name: http
       port: 8081
@@ -41,7 +69,15 @@ kind: ServiceMonitor
 metadata:
   name: backend
   namespace: monitoring
+  annotations:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/version: "1.1.0"
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: sentinel-dashboard
   labels:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: sentinel-dashboard
     release: prometheus
 spec:
   namespaceSelector:
@@ -49,7 +85,10 @@ spec:
       - default
   selector:
     matchLabels:
-      app: backend
+      svc.kubernetes.io/name: backend
+      app.kubernetes.io/name: backend
+      app.kubernetes.io/component: backend
+      app.kubernetes.io/part-of: sentinel-dashboard
   endpoints:
     - port: http
       interval: 5s
@@ -63,10 +102,22 @@ apiVersion: v1
 kind: Service
 metadata:
   name: backend-external
+  annotations:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/version: "1.1.0"
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: sentinel-dashboard
+  labels:
+    svc.kubernetes.io/name: backend-external
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: sentinel-dashboard
 spec:
   type: NodePort
   selector:
-    app: backend
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: sentinel-dashboard
   ports:
     - port: 8080
       targetPort: backend
