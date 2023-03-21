@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,8 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          # We advise you to build, push and use your own image, instead of using instructor's image.
-          image: ghcr.io/jasonsmithio/backend:v1
+          image: shehabeldeen/backend-app:v1
           ports:
             - name: backend
               containerPort: 8080
