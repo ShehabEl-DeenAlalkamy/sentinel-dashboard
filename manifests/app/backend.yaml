@@ -41,13 +41,14 @@ spec:
           ports:
             - name: backend
               containerPort: 8080
-          resources:
-            requests:
-              memory: "128Mi"
-              cpu: "64m"
-            limits:
-              memory: "256Mi"
-              cpu: "128m"
+          resources: {}
+          # ? disabled due to limited resources
+          #   requests:
+          #     memory: "128Mi"
+          #     cpu: "64m"
+          #   limits:
+          #     memory: "256Mi"
+          #     cpu: "128m"
           livenessProbe:
             httpGet:
               path: /health
