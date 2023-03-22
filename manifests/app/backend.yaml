@@ -5,7 +5,7 @@ metadata:
   name: backend
   annotations:
     app.kubernetes.io/name: backend
-    app.kubernetes.io/version: "1.1.0"
+    app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -23,7 +23,7 @@ spec:
     metadata:
       annotations:
         app.kubernetes.io/name: backend
-        app.kubernetes.io/version: "1.1.0"
+        app.kubernetes.io/version: "2.0.0"
         app.kubernetes.io/component: backend
         app.kubernetes.io/part-of: sentinel-dashboard
       labels:
@@ -33,11 +33,74 @@ spec:
     spec:
       containers:
         - name: backend
-          image: shehabeldeen/backend-app:v1
+          image: shehabeldeen/backend-app:v2
           imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /usr/app/metrics
+              name: metrics-storage
           ports:
             - name: backend
               containerPort: 8080
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "64m"
+            limits:
+              memory: "256Mi"
+              cpu: "128m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: backend
+            initialDelaySeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: backend
+            initialDelaySeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: MONGO_DB_ROOT_USER
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: MONGO_DB_ROOT_PASSWORD
+
+            - name: DB_AUTH_SRC
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: MONGO_DB_AUTH_SRC
+
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb
+                  key: MONGO_DB_HOST
+
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb
+                  key: MONGO_DB_PORT
+
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb
+                  key: MONGO_DB_NAME
+      volumes:
+        - name: metrics-storage
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
@@ -45,7 +108,7 @@ metadata:
   name: backend
   annotations:
     app.kubernetes.io/name: backend
-    app.kubernetes.io/version: "1.1.0"
+    app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -71,7 +134,7 @@ metadata:
   namespace: monitoring
   annotations:
     app.kubernetes.io/name: backend
-    app.kubernetes.io/version: "1.1.0"
+    app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -104,7 +167,7 @@ metadata:
   name: backend-external
   annotations:
     app.kubernetes.io/name: backend
-    app.kubernetes.io/version: "1.1.0"
+    app.kubernetes.io/version: "2.0.0"
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -119,6 +182,7 @@ spec:
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: sentinel-dashboard
   ports:
-    - port: 8080
+    - name: http
+      port: 8080
       targetPort: backend
       nodePort: 30005
