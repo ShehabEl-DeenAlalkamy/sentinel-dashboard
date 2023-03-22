@@ -1,0 +1,36 @@
+---
+auth:
+  enabled: true
+
+metrics:
+  enabled: true
+  ServiceMonitor:
+    enabled: true
+    namespace: monitoring
+    labels:
+      release: prometheus
+
+extraDeploy:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: mongodb-external
+      namespace: default
+      labels:
+        app.kubernetes.io/component: mongodb
+        app.kubernetes.io/instance: mongodb
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: mongodb
+    spec:
+      type: NodePort
+      externalTrafficPolicy: Cluster
+      ports:
+        - name: http
+          port: 27017
+          nodePort: 30008
+          protocol: TCP
+          targetPort: mongodb
+      selector:
+        app.kubernetes.io/component: mongodb
+        app.kubernetes.io/instance: mongodb
+        app.kubernetes.io/name: mongodb

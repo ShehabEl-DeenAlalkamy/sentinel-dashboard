@@ -1,0 +1,230 @@
+# In production you should use the official Bitnami Helm Chart for better management
+
+# prometheus-mongodb-exporter
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus-mongodb-exporter
+  labels:
+    app.kubernetes.io/name: prometheus-mongodb-exporter
+    app.kubernetes.io/instance: prometheus-mongodb-exporter
+    app.kubernetes.io/version: "0.31.0"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-mongodb-exporter
+  labels:
+    app.kubernetes.io/name: prometheus-mongodb-exporter
+    app.kubernetes.io/instance: prometheus-mongodb-exporter
+    app.kubernetes.io/version: "0.31.0"
+spec:
+  ports:
+    - port: 9216
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
+  selector:
+    app.kubernetes.io/name: prometheus-mongodb-exporter
+    app.kubernetes.io/instance: prometheus-mongodb-exporter
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-mongodb-exporter
+  labels:
+    app.kubernetes.io/name: prometheus-mongodb-exporter
+    app.kubernetes.io/instance: prometheus-mongodb-exporter
+    app.kubernetes.io/version: "0.31.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-mongodb-exporter
+      app.kubernetes.io/instance: prometheus-mongodb-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: prometheus-mongodb-exporter
+        app.kubernetes.io/instance: prometheus-mongodb-exporter
+    spec:
+      serviceAccountName: prometheus-mongodb-exporter
+      containers:
+        - name: mongodb-exporter
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: MONGO_EXPORTER_URI
+          image: "percona/mongodb_exporter:0.31.0"
+          imagePullPolicy: IfNotPresent
+          args:
+            - --web.listen-address=:9216
+            - --collect-all
+          ports:
+            - name: metrics
+              containerPort: 9216
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: metrics
+            initialDelaySeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: metrics
+            initialDelaySeconds: 10
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+            readOnlyRootFilesystem: true
+            runAsGroup: 10000
+            runAsNonRoot: true
+            runAsUser: 10000
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-mongodb-exporter
+  labels:
+    app.kubernetes.io/name: prometheus-mongodb-exporter
+    app.kubernetes.io/instance: prometheus-mongodb-exporter
+    app.kubernetes.io/version: "0.31.0"
+    release: "prometheus"
+  namespace: monitoring
+spec:
+  endpoints:
+    - port: metrics
+      interval: 30s
+      scrapeTimeout: 10s
+  namespaceSelector:
+    matchNames:
+      - default
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-mongodb-exporter
+      app.kubernetes.io/instance: prometheus-mongodb-exporter
+
+# mongodb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  annotations:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: sentinel-dashboard
+  labels:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: sentinel-dashboard
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mongodb
+      app.kubernetes.io/component: database
+      app.kubernetes.io/part-of: sentinel-dashboard
+  template:
+    metadata:
+      annotations:
+        app.kubernetes.io/name: mongodb
+        app.kubernetes.io/component: database
+        app.kubernetes.io/part-of: sentinel-dashboard
+      labels:
+        app.kubernetes.io/name: mongodb
+        app.kubernetes.io/component: database
+        app.kubernetes.io/part-of: sentinel-dashboard
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo
+          volumeMounts:
+            - mountPath: /data/db
+              name: data-storage
+          ports:
+            - name: mongodb
+              containerPort: 27017
+          resources: {}
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: MONGO_DB_ROOT_USER
+
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: MONGO_DB_ROOT_PASSWORD
+      # obviously you should make use of persistent volume in production but this will do for the time being
+      volumes:
+        - name: data-storage
+          emptyDir: {}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb
+  annotations:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: sentinel-dashboard
+  labels:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: sentinel-dashboard
+data:
+  MONGO_DB_HOST: "mongodb.default"
+  MONGO_DB_PORT: "27017"
+  MONGO_DB_NAME: "galaxydb"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb
+  annotations:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: sentinel-dashboard
+  labels:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: sentinel-dashboard
+type: Opaque
+data:
+  MONGO_DB_ROOT_USER: "aGFtYWRh"
+  MONGO_DB_ROOT_PASSWORD: "d293aW1zb3NlY3VyZQ=="
+  MONGO_DB_AUTH_SRC: "YWRtaW4="
+  MONGO_EXPORTER_URI: "bW9uZ29kYjovL2hhbWFkYTp3b3dpbXNvc2VjdXJlQG1vbmdvZGIuZGVmYXVsdDoyNzAxNy9zdGFycz9hdXRoU291cmNlPWFkbWlu"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  annotations:
+    svc.kubernetes.io/name: mongodb
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: sentinel-dashboard
+  labels:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: sentinel-dashboard
+spec:
+  selector:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: sentinel-dashboard
+  ports:
+    - name: http
+      port: 27017
+      targetPort: mongodb

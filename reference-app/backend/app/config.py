@@ -8,8 +8,18 @@ import os
 class BaseConfig:
     CONFIG_NAME = "base"
     DEBUG = False
-    BACKEND_SVC_BASE_URL = os.environ["BACKEND_SVC_BASE_URL"]
-    TRIAL_SVC_BASE_URL = os.environ["TRIAL_SVC_BASE_URL"]
+    MONGO_DB_USERNAME = os.environ["DB_USERNAME"]
+    MONGO_DB_PASSWORD = os.environ["DB_PASSWORD"]
+    MONGO_DB_HOST = os.environ["DB_HOST"]
+    MONGO_DB_PORT = os.environ["DB_PORT"]
+    MONGO_DB_NAME = os.environ["DB_NAME"]
+    MONGO_AUTH_SRC = os.environ["DB_AUTH_SRC"]
+    MONGO_URI = (
+        f"mongodb://{MONGO_DB_USERNAME}:{MONGO_DB_PASSWORD}@{MONGO_DB_HOST}:{MONGO_DB_PORT}/{MONGO_DB_NAME}?authSource={MONGO_AUTH_SRC}"
+    )
+    SUPPRESSED_MONGO_URI = (
+        f"mongodb://<credentials>@{MONGO_DB_HOST}{MONGO_URI.split('@' + MONGO_DB_HOST)[1]}"
+    )
     LOGGING_CONFIG = {
         'version': 1,
         'disable_existing_loggers': True,
@@ -55,7 +65,7 @@ class BaseConfig:
                 'level': 'INFO',
                 'propagate': False,
             },
-            'frontend_service': {
+            'backend_service': {
                 'handlers': ['stdout_handler', 'stderr_handler'],
                 'level': 'INFO',
                 'propagate': False,

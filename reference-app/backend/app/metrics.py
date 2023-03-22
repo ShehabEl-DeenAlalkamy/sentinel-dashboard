@@ -9,12 +9,12 @@ def _init(app):
 
     metrics.init_app(app)
 
-    metrics.info('app_info', 'Frontend Service',
-                 version='2.2.0', major='2', minor='2')
+    metrics.info('app_info', 'Backend Service',
+                 version='2.1.0', major='2', minor='1')
 
     metrics.register_default(
         metrics.counter(
-            'frontend_service_http_request_by_path', 'Request count by request paths',
+            'backend_service_http_request_by_path', 'Request count by request paths',
             labels={'path': lambda: request.path, 'method': lambda: request.method,
                     'status': lambda resp: resp.status_code}, initial_value_when_only_static_labels=False
         )

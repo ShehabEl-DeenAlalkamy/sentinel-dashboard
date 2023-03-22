@@ -5,7 +5,7 @@ metadata:
   name: frontend
   annotations:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.1.0"
+    app.kubernetes.io/version: "2.2.0"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -23,7 +23,7 @@ spec:
     metadata:
       annotations:
         app.kubernetes.io/name: frontend
-        app.kubernetes.io/version: "2.1.0"
+        app.kubernetes.io/version: "2.2.0"
         app.kubernetes.io/component: frontend
         app.kubernetes.io/part-of: sentinel-dashboard
       labels:
@@ -41,13 +41,14 @@ spec:
           ports:
             - name: frontend
               containerPort: 8080
-          resources:
-            requests:
-              memory: "128Mi"
-              cpu: "64m"
-            limits:
-              memory: "256Mi"
-              cpu: "128m"
+          resources: {}
+          # ? disabled due to limited resources
+          #   requests:
+          #     memory: "128Mi"
+          #     cpu: "64m"
+          #   limits:
+          #     memory: "256Mi"
+          #     cpu: "128m"
           livenessProbe:
             httpGet:
               path: /health
@@ -64,10 +65,10 @@ spec:
             failureThreshold: 3
           env:
             - name: BACKEND_SVC_BASE_URL
-              value: "http://localhost:30006"
+              value: "http://localhost:30005"
 
             - name: TRIAL_SVC_BASE_URL
-              value: "http://localhost:30007"
+              value: "http://localhost:30006"
       volumes:
         - name: metrics-storage
           emptyDir: {}
@@ -78,7 +79,7 @@ metadata:
   name: frontend
   annotations:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.1.0"
+    app.kubernetes.io/version: "2.2.0"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -104,7 +105,7 @@ metadata:
   namespace: monitoring
   annotations:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.1.0"
+    app.kubernetes.io/version: "2.2.0"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -133,7 +134,7 @@ metadata:
   name: frontend-external
   annotations:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.1.0"
+    app.kubernetes.io/version: "2.2.0"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
