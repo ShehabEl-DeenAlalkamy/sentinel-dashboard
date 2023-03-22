@@ -64,10 +64,10 @@ spec:
             failureThreshold: 3
           env:
             - name: BACKEND_SVC_BASE_URL
-              value: "http://localhost:30006"
+              value: "http://localhost:30005"
 
             - name: TRIAL_SVC_BASE_URL
-              value: "http://localhost:30007"
+              value: "http://localhost:30006"
       volumes:
         - name: metrics-storage
           emptyDir: {}
