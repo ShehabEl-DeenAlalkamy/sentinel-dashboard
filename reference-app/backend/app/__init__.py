@@ -18,12 +18,15 @@ def create_app(env=None):
     from app.routes.apis import apis_bp
     from app.routes.stars import stars_bp
 
+    from flask_cors import CORS
     import logging.config
 
     app = Flask(__name__)
     app.config.from_object(config_by_name[env or "test"])
 
     logging.config.dictConfig(app.config['LOGGING_CONFIG'])
+
+    CORS(app)
 
     app.register_blueprint(index_bp)
     app.register_blueprint(healthchecks_bp)
