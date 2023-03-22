@@ -5,7 +5,7 @@ metadata:
   name: backend
   annotations:
     app.kubernetes.io/name: backend
-    app.kubernetes.io/version: "2.0.1"
+    app.kubernetes.io/version: "2.1.0"
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -23,7 +23,7 @@ spec:
     metadata:
       annotations:
         app.kubernetes.io/name: backend
-        app.kubernetes.io/version: "2.0.1"
+        app.kubernetes.io/version: "2.1.0"
         app.kubernetes.io/component: backend
         app.kubernetes.io/part-of: sentinel-dashboard
       labels:
@@ -108,7 +108,7 @@ metadata:
   name: backend
   annotations:
     app.kubernetes.io/name: backend
-    app.kubernetes.io/version: "2.0.1"
+    app.kubernetes.io/version: "2.1.0"
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -134,7 +134,7 @@ metadata:
   namespace: monitoring
   annotations:
     app.kubernetes.io/name: backend
-    app.kubernetes.io/version: "2.0.1"
+    app.kubernetes.io/version: "2.1.0"
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -167,7 +167,7 @@ metadata:
   name: backend-external
   annotations:
     app.kubernetes.io/name: backend
-    app.kubernetes.io/version: "2.0.1"
+    app.kubernetes.io/version: "2.1.0"
     app.kubernetes.io/component: backend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
