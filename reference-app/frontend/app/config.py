@@ -55,7 +55,7 @@ class BaseConfig:
                 'level': 'INFO',
                 'propagate': False,
             },
-            'frontend_svc': {
+            'frontend_service': {
                 'handlers': ['stdout_handler', 'stderr_handler'],
                 'level': 'INFO',
                 'propagate': False,
