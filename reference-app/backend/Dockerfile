@@ -1,5 +1,5 @@
 # I am referencing the image digest to ensure deterministic build
-FROM python:3.8-alpine@sha256:9e8a162cd85c78458ac47457b08450be8ca4ae5de5ee0f7b23665b6ea2569aed
+FROM python:3.8-slim@sha256:eda9e0185912dc94bf96d6571e234d12cbd49fc932de1b562bb3217bed755f83
 
 # In production I would rather to keep some of these info confidential but there is no harm for development purposes
 ENV APP_NAME backend_service
@@ -29,11 +29,13 @@ ENV OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SANITIZE_FIELDS ".*session.*,set-c
 ENV PROMETHEUS_MULTIPROC_DIR ${APP_HOME}/metrics
 ENV prometheus_multiproc_dir ${APP_HOME}/metrics
 
-# Adding doas pacakge, an alternative to sudo package
-RUN apk add doas && \
-    # Following least privilege principle, to ensure we don't provide root access to our container default user
-    addgroup -g 3000 -S python && \
-    adduser -u 3000 -G python -S python
+# RUN apt-get update && \
+#     # install curl for debugging
+#     apt-get install curl -y
+
+# Following least privilege principle, to ensure we don't provide root access to our container default user
+RUN groupadd -g 3000 python && \
+    useradd -r -u 3000 -g python python
 
 RUN mkdir -p ${APP_HOME} && chown python:python ${APP_HOME}
 WORKDIR ${APP_HOME}
