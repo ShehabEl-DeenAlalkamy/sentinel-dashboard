@@ -40,7 +40,7 @@ def create_app(env=None):
 
     mongo.init_app(app)
 
-    instrumentor.instrument_app(app)
+    instrumentor.instrument_app(app, excluded_urls="health/*,metrics")
 
     with app.app_context():
         from app.metrics import _init as init_metrics
