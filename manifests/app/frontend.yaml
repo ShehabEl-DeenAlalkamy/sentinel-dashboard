@@ -5,7 +5,7 @@ metadata:
   name: frontend
   annotations:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.3.0"
+    app.kubernetes.io/version: "2.3.1"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -23,7 +23,7 @@ spec:
     metadata:
       annotations:
         app.kubernetes.io/name: frontend
-        app.kubernetes.io/version: "2.3.0"
+        app.kubernetes.io/version: "2.3.1"
         app.kubernetes.io/component: frontend
         app.kubernetes.io/part-of: sentinel-dashboard
       labels:
@@ -82,7 +82,7 @@ metadata:
   name: frontend
   annotations:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.3.0"
+    app.kubernetes.io/version: "2.3.1"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -108,7 +108,7 @@ metadata:
   namespace: monitoring
   annotations:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.3.0"
+    app.kubernetes.io/version: "2.3.1"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
@@ -137,7 +137,7 @@ metadata:
   name: frontend-external
   annotations:
     app.kubernetes.io/name: frontend
-    app.kubernetes.io/version: "2.3.0"
+    app.kubernetes.io/version: "2.3.1"
     app.kubernetes.io/component: frontend
     app.kubernetes.io/part-of: sentinel-dashboard
   labels:
