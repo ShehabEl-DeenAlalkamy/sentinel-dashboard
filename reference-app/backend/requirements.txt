@@ -16,8 +16,12 @@ lazy-object-proxy==1.9.0
 MarkupSafe==2.1.2
 mccabe==0.6.1
 opentelemetry-api==1.17.0
+opentelemetry-instrumentation==0.38b0
+opentelemetry-instrumentation-flask==0.38b0
+opentelemetry-instrumentation-wsgi==0.38b0
 opentelemetry-sdk==1.17.0
 opentelemetry-semantic-conventions==0.38b0
+opentelemetry-util-http==0.38b0
 prometheus-client==0.16.0
 prometheus-flask-exporter==0.22.3
 pylint==2.4.0
