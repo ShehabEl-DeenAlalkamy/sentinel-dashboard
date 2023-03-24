@@ -99,6 +99,9 @@ spec:
                 configMapKeyRef:
                   name: mongodb
                   key: MONGO_DB_NAME
+
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://jaeger-collector.default:4317"
       volumes:
         - name: metrics-storage
           emptyDir: {}
