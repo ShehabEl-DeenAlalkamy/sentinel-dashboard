@@ -57,6 +57,9 @@ def get_public_entries():
                                     'auth', "N/A")
                                 api_span.set_attribute('https', entry['HTTPS'])
                             except Exception as e:
+                                api_span.add_event(
+                                    "collection-failure", {"error": str(e)})
+                                api_span.set_status(StatusCode.ERROR)
                                 _logger.error(
                                     f"Error: unable to get homepage for '{entry['API']}' reason='{str(e)}'")
                                 api_span.set_attribute('status', 'FAILED')
