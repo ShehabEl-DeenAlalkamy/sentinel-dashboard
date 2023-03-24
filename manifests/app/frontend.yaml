@@ -69,6 +69,9 @@ spec:
 
             - name: TRIAL_SVC_BASE_URL
               value: "http://localhost:30006"
+
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://jaeger-collector.default:4317"
       volumes:
         - name: metrics-storage
           emptyDir: {}
