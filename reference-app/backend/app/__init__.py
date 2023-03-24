@@ -1,9 +1,11 @@
 from flask import Flask
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry.instrumentation.pymongo import PymongoInstrumentor
 from opentelemetry import trace
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 from flask_pymongo import PyMongo
 import logging
+
 
 _logger = logging.getLogger('backend_service')
 
@@ -11,6 +13,7 @@ metrics = GunicornInternalPrometheusMetrics.for_app_factory(
     excluded_paths=['/metrics', '/health'])
 
 mongo = PyMongo()
+pymongo_instrumentor = PymongoInstrumentor()
 
 instrumentor = FlaskInstrumentor()
 tracer = trace.get_tracer(__name__)
@@ -37,6 +40,8 @@ def create_app(env=None):
     app.register_blueprint(healthchecks_bp)
     app.register_blueprint(apis_bp)
     app.register_blueprint(stars_bp)
+
+    pymongo_instrumentor.instrument()
 
     mongo.init_app(app)
 
