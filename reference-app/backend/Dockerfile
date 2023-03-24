@@ -1,5 +1,5 @@
 # I am referencing the image digest to ensure deterministic build
-FROM python:3.8-alpine3.16@sha256:3d644db6648217679bd7255386dff0b15ab27da87a11e13613a6569377f003d7
+FROM python:3.8-alpine3.12
 
 # In production I would rather to keep some of these info confidential but there is no harm for development purposes
 ENV APP_NAME backend_service
