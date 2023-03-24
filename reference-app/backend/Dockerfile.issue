@@ -1,6 +1,8 @@
 # ! it seems that this base image has no public access to the internet, I was unable to execute /api/entries endpoint the logs were:
 # ! requests.exceptions.ConnectionError: HTTPSConnectionPool(host='cat-fact.herokuapp.com', port=443): Max retries exceeded with url: /random (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f159a0ad0d0>: Failed to establish a new connection: [Errno -3] Try again'))
 # ! refer to https://github.com/dotnet/dotnet-docker/issues/2688
+# ! UPDATE:
+# ! - I tried 3.8-alpine3.16 and 3.8-alpine3.12 and they failed both, it seems I need to either update the packages or something else
 # I am referencing the image digest to ensure deterministic build
 # FROM python:3.8-alpine@sha256:9e8a162cd85c78458ac47457b08450be8ca4ae5de5ee0f7b23665b6ea2569aed
 
