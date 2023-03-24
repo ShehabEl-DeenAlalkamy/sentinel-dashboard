@@ -55,9 +55,9 @@ jobs:
             type=ref,event=pr
             type=sha
             type=raw,value=${{ github.event.inputs.raw-image-tag }}
-            type=raw,value=v2.2.2-slim
-            type=raw,value=v2.2-slim
-            type=raw,value=v2-slim
+            type=raw,value=v2.2.2-alpine
+            type=raw,value=v2.2-alpine
+            type=raw,value=v2-alpine
             type=raw,value=v2.2.2
             type=raw,value=v2.2
             type=raw,value=v2   
