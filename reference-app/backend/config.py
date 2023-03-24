@@ -17,6 +17,10 @@ def post_fork(server, worker):
     resource = Resource.create(
         attributes={
             "service.name": "backend-service",
+            "service.namespace": "project.sentinel-dashboard",
+            "service.version": "2.1.0",
+            "service.version.major": "2",
+            "service.version.minor": "1",
             "worker": worker.pid,
         }
     )
