@@ -25,15 +25,17 @@ def get_public_entries():
         with tracer.start_span('get-public-apis') as span:
             try:
                 SAMPLE_COUNT = int(request.args.get('sample', 30))
+                TOTAL_COUNT = -1
                 ctx = set_span_in_context(span)
                 res = requests.get(
                     'https://api.publicapis.org/entries', timeout=4)
                 if res.status_code == 200:
+                    TOTAL_COUNT = res.json()['count']
                     _logger.info(
-                        f"Received {res.json()['count']} total entries")
+                        f"Received {TOTAL_COUNT} total entries")
                     _logger.info(
                         f"Collecting homepages for the first {SAMPLE_COUNT} entries to save time")
-                    span.set_attribute('count.total', res.json()['count'])
+                    span.set_attribute('count.total', TOTAL_COUNT)
                     span.set_attribute('count.actual', SAMPLE_COUNT)
                     for entry in res.json()['entries'][:SAMPLE_COUNT]:
                         _logger.info(
@@ -58,7 +60,7 @@ def get_public_entries():
                                     f"Error: unable to get homepage for '{entry['API']}' reason='{str(e)}'")
                                 api_span.set_attribute('status', 'FAILED')
                     span.add_event("collection-success", {"homepages.count.collected": len(
-                        homepages), "homepages.count.total": res.json()['count'], "homepages.count.sample": SAMPLE_COUNT})
+                        homepages), "homepages.count.total": TOTAL_COUNT, "homepages.count.sample": SAMPLE_COUNT})
                     succeeded = True
                     _logger.info(f"Collected {len(homepages)} homepages")
                 else:
@@ -76,7 +78,7 @@ def get_public_entries():
                 "results": {
                     "collected": len(homepages),
                     "sample": SAMPLE_COUNT,
-                    "total": res.json()['count']
+                    "total": TOTAL_COUNT
                 }
             }
     error = {
