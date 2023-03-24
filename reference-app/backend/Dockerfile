@@ -4,7 +4,7 @@ FROM python:3.8-alpine@sha256:9e8a162cd85c78458ac47457b08450be8ca4ae5de5ee0f7b23
 # In production I would rather to keep some of these info confidential but there is no harm for development purposes
 ENV APP_NAME backend_service
 ENV APP_DESCRIPTION "Backend Service"
-ENV APP_VERSION 2.2.0
+ENV APP_VERSION 2.2.1
 # Startup command params
 ENV APP_IP_ADDRESS 0.0.0.0
 ENV APP_PORT 8080
