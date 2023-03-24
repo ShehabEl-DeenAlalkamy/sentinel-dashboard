@@ -28,7 +28,7 @@ def get_public_entries():
                 res = requests.get(
                     'https://api.publicapis.org/entries', timeout=3)
                 if res.status_code == 200:
-                    SAMPLE_COUNT = 2
+                    SAMPLE_COUNT = request.args.get('sample', 30)
                     _logger.info(
                         f"Received {res.json()['count']} total entries")
                     _logger.info(
