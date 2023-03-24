@@ -2,6 +2,7 @@ from app import tracer, _logger
 
 from flask import Blueprint, jsonify, request, Response
 from opentelemetry.trace import set_span_in_context
+from opentelemetry.trace.status import StatusCode
 import time
 import requests
 import json
@@ -28,7 +29,7 @@ def get_public_entries():
                 TOTAL_COUNT = -1
                 ctx = set_span_in_context(span)
                 res = requests.get(
-                    'https://api.publicapis.org/entries', timeout=4)
+                    'https://api.publicapis.org/entries', timeout=3)
                 if res.status_code == 200:
                     TOTAL_COUNT = res.json()['count']
                     _logger.info(
@@ -64,14 +65,18 @@ def get_public_entries():
                     succeeded = True
                     _logger.info(f"Collected {len(homepages)} homepages")
                 else:
+                    SAMPLE_COUNT = -1
                     _logger.error(
                         f"Error: expected status code '200' got '{res.status_code}' instead")
-                    span.add_event("collection-failure", {"error": str(e)})
                     _logger.info("Nothing to do..")
+                    span.add_event("collection-failure", {"error": str(e)})
+                    span.set_status(StatusCode.ERROR)
 
             except Exception as e:
+                SAMPLE_COUNT = -1
                 _logger.error(f"Error: {str(e)}")
                 span.add_event("collection-failure", {"error": str(e)})
+                span.set_status(StatusCode.ERROR)
 
             return {
                 "succeeded": succeeded,
