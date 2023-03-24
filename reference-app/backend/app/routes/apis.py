@@ -24,11 +24,11 @@ def get_public_entries():
         succeeded = False
         with tracer.start_span('get-public-apis') as span:
             try:
+                SAMPLE_COUNT = int(request.args.get('sample', 30))
                 ctx = set_span_in_context(span)
                 res = requests.get(
-                    'https://api.publicapis.org/entries', timeout=3)
+                    'https://api.publicapis.org/entries', timeout=4)
                 if res.status_code == 200:
-                    SAMPLE_COUNT = int(request.args.get('sample', 30))
                     _logger.info(
                         f"Received {res.json()['count']} total entries")
                     _logger.info(
@@ -75,7 +75,7 @@ def get_public_entries():
                 "succeeded": succeeded,
                 "results": {
                     "collected": len(homepages),
-                    "smaple": SAMPLE_COUNT,
+                    "sample": SAMPLE_COUNT,
                     "total": res.json()['count']
                 }
             }
