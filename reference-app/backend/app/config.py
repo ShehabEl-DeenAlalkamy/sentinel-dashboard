@@ -8,6 +8,16 @@ import os
 class BaseConfig:
     CONFIG_NAME = "base"
     DEBUG = False
+
+    APP_NAME = os.environ["APP_NAME"]
+    APP_DESCRIPTION = os.environ["APP_DESCRIPTION"]
+    APP_VERSION = os.environ["APP_VERSION"]
+    APP_VERSION_MAJOR = os.environ["APP_VERSION"].split('.')[0]
+    APP_VERSION_MINOR = os.environ["APP_VERSION"].split('.')[1]
+
+    OTEL_EXPORTER_OTLP_ENDPOINT = os.environ["OTEL_EXPORTER_OTLP_ENDPOINT"]
+    OTEL_EXPORTER_OTLP_PROTOCOL = os.environ["OTEL_EXPORTER_OTLP_PROTOCOL"]
+
     MONGO_DB_USERNAME = os.environ["DB_USERNAME"]
     MONGO_DB_PASSWORD = os.environ["DB_PASSWORD"]
     MONGO_DB_HOST = os.environ["DB_HOST"]
@@ -20,6 +30,7 @@ class BaseConfig:
     SUPPRESSED_MONGO_URI = (
         f"mongodb://<credentials>@{MONGO_DB_HOST}{MONGO_URI.split('@' + MONGO_DB_HOST)[1]}"
     )
+
     LOGGING_CONFIG = {
         'version': 1,
         'disable_existing_loggers': True,

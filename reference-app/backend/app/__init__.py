@@ -8,7 +8,7 @@ import logging
 _logger = logging.getLogger('backend_service')
 
 metrics = GunicornInternalPrometheusMetrics.for_app_factory(
-    defaults_prefix='backend_service', excluded_paths=['/metrics', '/health'])
+    excluded_paths=['/metrics', '/health'])
 
 mongo = PyMongo()
 
