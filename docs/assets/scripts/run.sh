@@ -11,6 +11,17 @@ export DB_PORT=30008
 export DB_NAME=galaxydb
 export DB_AUTH_SRC='admin'
 
+export APP_NAME=backend_service
+export APP_DESCRIPTION="Backend Service"
+export APP_VERSION=2.1.0
+export OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:4317"
+export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+export OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_REQUEST="Content.*,X-.*"
+export OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_RESPONSE="Content.*,X-.*"
+export OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SANITIZE_FIELDS=".*session.*,set-cookie,Authorization,X-Auth.*"
+export OTEL_TRACES_EXPORTER=otlp
+# export OTEL_RESOURCE_ATTRIBUTES="service.name=backend-service"
+
 # prometheus-mongodb-exporter
 # MONGO_URI="mongodb://hamada:wowimsosecure@mongodb.default:27017/stars?authSource=admin"
 # helm install prometheus-mongodb-exporter \
@@ -27,7 +38,7 @@ source "${BE_SVC_PATH}"/.venv/bin/activate
 
 # PROMETHEUS_MULTIPROC_DIR="${FE_SVC_PATH}"/metrics FLASK_APP="${FE_SVC_PATH}"/app.py flask run -p 8082
 # cd "${FE_SVC_PATH}" && PROMETHEUS_MULTIPROC_DIR="${FE_SVC_PATH}"/metrics gunicorn --access-logfile - --error-logfile - -c config.py -w 4 --threads 2 -b 0.0.0.0:8082 wsgi:app
-cd "${BE_SVC_PATH}" && PROMETHEUS_MULTIPROC_DIR="${BE_SVC_PATH}"/metrics gunicorn --access-logfile - --error-logfile - -c config.py -w 4 --threads 2 -b 0.0.0.0:8083 wsgi:app
+cd "${BE_SVC_PATH}" && PROMETHEUS_MULTIPROC_DIR="${BE_SVC_PATH}"/metrics gunicorn --access-logfile - --error-logfile - -c config.py -t 360 -w 4 --threads 0 -b 0.0.0.0:8083 wsgi:app
 
 deactivate
 

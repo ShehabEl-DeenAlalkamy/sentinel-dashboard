@@ -5,16 +5,17 @@ from flask import request
 
 
 def _init(app):
+    metrics._defaults_prefix = app.config["APP_NAME"]
     metrics._default_labels = {'host': get_host()}
 
     metrics.init_app(app)
 
-    metrics.info('app_info', 'Frontend Service',
-                 version='2.2.0', major='2', minor='2')
+    metrics.info('app_info', app.config["APP_DESCRIPTION"],
+                 version=app.config["APP_VERSION"], major=app.config["APP_VERSION_MAJOR"], minor=app.config["APP_VERSION_MINOR"])
 
     metrics.register_default(
         metrics.counter(
-            'frontend_service_http_request_by_path', 'Request count by request paths',
+            f'{app.config["APP_NAME"]}_http_request_by_path', 'Request count by request paths',
             labels={'path': lambda: request.path, 'method': lambda: request.method,
                     'status': lambda resp: resp.status_code}, initial_value_when_only_static_labels=False
         )

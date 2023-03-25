@@ -8,6 +8,16 @@ import os
 class BaseConfig:
     CONFIG_NAME = "base"
     DEBUG = False
+
+    APP_NAME = os.environ["APP_NAME"]
+    APP_DESCRIPTION = os.environ["APP_DESCRIPTION"]
+    APP_VERSION = os.environ["APP_VERSION"]
+    APP_VERSION_MAJOR = os.environ["APP_VERSION"].split('.')[0]
+    APP_VERSION_MINOR = os.environ["APP_VERSION"].split('.')[1]
+
+    OTEL_EXPORTER_OTLP_ENDPOINT = os.environ["OTEL_EXPORTER_OTLP_ENDPOINT"]
+    OTEL_EXPORTER_OTLP_PROTOCOL = os.environ["OTEL_EXPORTER_OTLP_PROTOCOL"]
+
     BACKEND_SVC_BASE_URL = os.environ["BACKEND_SVC_BASE_URL"]
     TRIAL_SVC_BASE_URL = os.environ["TRIAL_SVC_BASE_URL"]
     LOGGING_CONFIG = {
