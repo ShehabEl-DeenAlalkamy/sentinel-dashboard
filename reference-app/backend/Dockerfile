@@ -4,7 +4,7 @@ FROM python:3.8-slim@sha256:eda9e0185912dc94bf96d6571e234d12cbd49fc932de1b562bb3
 # In production I would rather to keep some of these info confidential but there is no harm for development purposes
 ENV APP_NAME backend_service
 ENV APP_DESCRIPTION "Backend Service"
-ENV APP_VERSION 2.2.2
+ENV APP_VERSION 2.3.0
 # Startup command params
 ENV APP_IP_ADDRESS 0.0.0.0
 ENV APP_PORT 8080
