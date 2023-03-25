@@ -3,9 +3,10 @@ from app import tracer, _logger
 from flask import Blueprint, jsonify, request, Response
 from opentelemetry.trace import set_span_in_context
 from opentelemetry.trace.status import StatusCode
-import time
-import requests
 import json
+import time
+import traceback
+import requests
 
 apis_bp = Blueprint('apis_bp', __name__)
 
@@ -23,10 +24,12 @@ def get_public_entries():
     if request.args.get('type', None) == "public":
         homepages = []
         succeeded = False
+        entries = []
         with tracer.start_span('get-public-apis') as span:
             try:
                 SAMPLE_COUNT = int(request.args.get('sample', 30))
                 TOTAL_COUNT = -1
+                ENTRY_TIMEOUT = float(request.args.get('entry-timeout', 2.5))
                 ctx = set_span_in_context(span)
                 res = requests.get(
                     'https://api.publicapis.org/entries', timeout=3)
@@ -35,9 +38,9 @@ def get_public_entries():
                     _logger.info(
                         f"Received {TOTAL_COUNT} total entries")
                     _logger.info(
-                        f"Collecting homepages for the first {SAMPLE_COUNT} entries to save time")
+                        f"Collecting homepages for the first {SAMPLE_COUNT} entries to save time with timeout {ENTRY_TIMEOUT} per entry connection")
                     span.set_attribute('count.total', TOTAL_COUNT)
-                    span.set_attribute('count.actual', SAMPLE_COUNT)
+                    span.set_attribute('count.sample', SAMPLE_COUNT)
                     for entry in res.json()['entries'][:SAMPLE_COUNT]:
                         _logger.info(
                             f"Collecting homepage for api='{entry['API']}' category='{entry['Category']}' link='{entry['Link']}'")
@@ -45,8 +48,9 @@ def get_public_entries():
                             try:
                                 homepages.append({
                                     'link': entry['Link'],
-                                    'page': requests.get(entry['Link'], timeout=2.5)
+                                    'page': requests.get(entry['Link'], timeout=ENTRY_TIMEOUT)
                                 })
+                                entries.append(entry)
                                 api_span.set_attribute('status', 'SUCCESS')
                                 api_span.set_attribute(
                                     'category', entry['Category'])
@@ -58,7 +62,7 @@ def get_public_entries():
                                 api_span.set_attribute('https', entry['HTTPS'])
                             except Exception as e:
                                 api_span.add_event(
-                                    "collection-failure", {"error": str(e)})
+                                    "exception", {"exception.message": str(e), "exception.stacktrace": traceback.format_exc()})
                                 api_span.set_status(StatusCode.ERROR)
                                 _logger.error(
                                     f"Error: unable to get homepage for '{entry['API']}' reason='{str(e)}'")
@@ -72,13 +76,15 @@ def get_public_entries():
                     _logger.error(
                         f"Error: expected status code '200' got '{res.status_code}' instead")
                     _logger.info("Nothing to do..")
-                    span.add_event("collection-failure", {"error": str(e)})
+                    span.add_event("exception", {
+                                   "exception.message": f"Error: expected status code '200' got '{res.status_code}' instead"})
                     span.set_status(StatusCode.ERROR)
 
             except Exception as e:
                 SAMPLE_COUNT = -1
                 _logger.error(f"Error: {str(e)}")
-                span.add_event("collection-failure", {"error": str(e)})
+                span.add_event("exception", {"exception.message": str(
+                    e), "exception.stacktrace": traceback.format_exc()})
                 span.set_status(StatusCode.ERROR)
 
             return {
@@ -86,7 +92,8 @@ def get_public_entries():
                 "results": {
                     "collected": len(homepages),
                     "sample": SAMPLE_COUNT,
-                    "total": TOTAL_COUNT
+                    "total": TOTAL_COUNT,
+                    "entries": entries
                 }
             }
     error = {
