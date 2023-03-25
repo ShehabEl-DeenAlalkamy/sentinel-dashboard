@@ -3,9 +3,12 @@
 # exit on errors
 set -e
 
+# ? the reason for this is that the graph functionality seems to be buggy on v1.39.0 and we wanna make use of the latest features
+# TODO: use version v1.42.0 (latest)
 # ! this is not a stable version and doesn't work properly
 # ! jaeger-operator can't create jaeger instances on any other namespaces other than it's namespace
 # export jaeger_version=v1.28.0
+# ! jaeger supports OTLP starting v1.35.1
 export jaeger_version=v1.34.1
 jaeger_namespace=observability
 prometheus_namespace=monitoring
