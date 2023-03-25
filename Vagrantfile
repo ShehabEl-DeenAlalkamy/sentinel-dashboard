@@ -77,7 +77,9 @@ Vagrant.configure("2") do |config|
   #
   #   # Customize the amount of memory on the VM:clear
 
-    vb.memory = "4096"
+    # you might want to increase the virtual machine memory to ensure better performance
+    # vb.memory = "4096"
+    vb.memory = "6096"
     #vb.memory = "2048"
     vb.name = "k3s"
   end

@@ -14,3 +14,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+# local prometheus-flask-exporter mult-proc metrics dir
+metrics/

@@ -13,8 +13,8 @@ from prometheus_flask_exporter import PrometheusMetrics
 
 
 app = Flask(__name__)
-FlaskInstrumentor().instrument_app(app)
-RequestsInstrumentor().instrument()
+# FlaskInstrumentor().instrument_app(app)
+# RequestsInstrumentor().instrument()
 
 metrics = PrometheusMetrics(app)
 # static information as metric
@@ -48,43 +48,50 @@ flask_tracer = FlaskTracing(tracer, True, app)
 
 @app.route("/")
 def homepage():
-    return render_template("main.html")
+    return {
+        "message": "hello world"
+    }
+    # with tracer.start_span("request-site") as site_span:
+    #   return {
+    #       "message": "hello world"
+    #   }
 
 
 @app.route("/trace")
 def trace():
-    def remove_tags(text):
-        tag = re.compile(r"<[^>]+>")
-        return tag.sub("", text)
+    jobs_info = {"message": "fake data"}
+    # def remove_tags(text):
+    #     tag = re.compile(r"<[^>]+>")
+    #     return tag.sub("", text)
 
-    with tracer.start_span("get-python-jobs") as span:
-        res = requests.get("https://jobs.github.com/positions.json?description=python")
-        span.log_kv({"event": "get jobs count", "count": len(res.json())})
-        span.set_tag("jobs-count", len(res.json()))
+    # with tracer.start_span("get-python-jobs") as span:
+    #     res = requests.get("https://jobs.github.com/positions.json?description=python")
+    #     span.log_kv({"event": "get jobs count", "count": len(res.json())})
+    #     span.set_tag("jobs-count", len(res.json()))
 
-        jobs_info = []
-        for result in res.json():
-            jobs = {}
-            with tracer.start_span("request-site") as site_span:
-                logger.info(f"Getting website for {result['company']}")
-                try:
-                    jobs["description"] = remove_tags(result["description"])
-                    jobs["company"] = result["company"]
-                    jobs["company_url"] = result["company_url"]
-                    jobs["created_at"] = result["created_at"]
-                    jobs["how_to_apply"] = result["how_to_apply"]
-                    jobs["location"] = result["location"]
-                    jobs["title"] = result["title"]
-                    jobs["type"] = result["type"]
-                    jobs["url"] = result["url"]
+    #     jobs_info = []
+    #     for result in res.json():
+    #         jobs = {}
+    #         with tracer.start_span("request-site") as site_span:
+    #             logger.info(f"Getting website for {result['company']}")
+    #             try:
+    #                 jobs["description"] = remove_tags(result["description"])
+    #                 jobs["company"] = result["company"]
+    #                 jobs["company_url"] = result["company_url"]
+    #                 jobs["created_at"] = result["created_at"]
+    #                 jobs["how_to_apply"] = result["how_to_apply"]
+    #                 jobs["location"] = result["location"]
+    #                 jobs["title"] = result["title"]
+    #                 jobs["type"] = result["type"]
+    #                 jobs["url"] = result["url"]
 
-                    jobs_info.append(jobs)
-                    site_span.set_tag("http.status_code", res.status_code)
-                    site_span.set_tag("company-site", result["company"])
-                except Exception:
-                    logger.error(f"Unable to get site for {result['company']}")
-                    site_span.set_tag("http.status_code", res.status_code)
-                    site_span.set_tag("company-site", result["company"])
+    #                 jobs_info.append(jobs)
+    #                 site_span.set_tag("http.status_code", res.status_code)
+    #                 site_span.set_tag("company-site", result["company"])
+    #             except Exception:
+    #                 logger.error(f"Unable to get site for {result['company']}")
+    #                 site_span.set_tag("http.status_code", res.status_code)
+    #                 site_span.set_tag("company-site", result["company"])
 
     return jsonify(jobs_info)
 
