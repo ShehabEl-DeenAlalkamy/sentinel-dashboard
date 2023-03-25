@@ -7,7 +7,7 @@ spec:
   # by defaullt this will be added, but this has been added to ensure deterministic deployment
   strategy: allInOne
   allInOne:
-    image: jaegertracing/all-in-one:1.39.0
+    image: jaegertracing/all-in-one:1.42.0
     options:
       collector:
         otlp:
